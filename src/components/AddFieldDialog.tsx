@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MapPin, Sparkles } from "lucide-react";
+import { MapPin, Sparkles, CalendarIcon } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -15,9 +14,11 @@ import { toast } from "sonner";
 interface AddFieldDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  farmId: string;
+  farmName: string;
 }
 
-export function AddFieldDialog({ open, onOpenChange }: AddFieldDialogProps) {
+export function AddFieldDialog({ open, onOpenChange, farmId, farmName }: AddFieldDialogProps) {
   const [fieldName, setFieldName] = useState("");
   const [cropType, setCropType] = useState("");
   const [soilType, setSoilType] = useState("");
@@ -28,7 +29,8 @@ export function AddFieldDialog({ open, onOpenChange }: AddFieldDialogProps) {
       toast.error("Please fill in all fields");
       return;
     }
-    toast.success(`AI baseline generated for "${fieldName}"! Predictions will update shortly.`);
+    // Backend integration: POST { farmId, fieldName, cropType, soilType, plantingDate }
+    toast.success(`AI baseline generated for "${fieldName}" on ${farmName}!`);
     onOpenChange(false);
     setFieldName("");
     setCropType("");
@@ -40,7 +42,7 @@ export function AddFieldDialog({ open, onOpenChange }: AddFieldDialogProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="font-display text-xl">Add New Field</DialogTitle>
+          <DialogTitle className="font-display text-xl">Add Field to {farmName}</DialogTitle>
           <DialogDescription>
             Register a field for AI-powered irrigation tracking and predictions.
           </DialogDescription>
@@ -107,10 +109,10 @@ export function AddFieldDialog({ open, onOpenChange }: AddFieldDialogProps) {
             </Popover>
           </div>
 
-          <div className="rounded-lg border-2 border-dashed border-muted-foreground/20 p-8 flex flex-col items-center justify-center gap-2 text-muted-foreground">
-            <MapPin size={32} className="opacity-40" />
+          <div className="rounded-lg border-2 border-dashed border-muted-foreground/20 p-6 flex flex-col items-center justify-center gap-1.5 text-muted-foreground">
+            <MapPin size={28} className="opacity-40" />
             <span className="text-sm font-medium">Select Field Boundaries</span>
-            <span className="text-xs">(Map Integration Coming Soon)</span>
+            <span className="text-xs">(Map drawing coming soon)</span>
           </div>
 
           <Button onClick={handleSubmit} className="w-full gap-2" size="lg">

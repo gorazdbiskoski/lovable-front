@@ -1,5 +1,4 @@
 import { Sun, Cloud, CloudRain, CloudLightning, CloudSun } from "lucide-react";
-import { DayPrediction } from "@/data/mockData";
 
 const weatherIcons = {
   sun: Sun,
@@ -7,13 +6,22 @@ const weatherIcons = {
   rain: CloudRain,
   storm: CloudLightning,
   "partly-cloudy": CloudSun,
-};
+} as const;
 
-export function WeatherStrip({ predictions }: { predictions: DayPrediction[] }) {
+export interface WeatherStripDay {
+  date: string;
+  dayLabel: string;
+  tempHigh: number;
+  tempLow: number;
+  rainfallMm: number;
+  weatherIcon: keyof typeof weatherIcons;
+}
+
+export function WeatherStrip({ predictions }: { predictions: WeatherStripDay[] }) {
   return (
     <div className="grid grid-cols-7 gap-2">
       {predictions.map((day) => {
-        const Icon = weatherIcons[day.weatherIcon];
+        const Icon = weatherIcons[day.weatherIcon] ?? Cloud;
         return (
           <div
             key={day.date}

@@ -1,5 +1,6 @@
 export interface FieldData {
   id: string;
+  farmId: string;
   name: string;
   cropType: string;
   soilType: string;
@@ -8,6 +9,14 @@ export interface FieldData {
   status: "optimal" | "warning" | "critical";
   areaHectares: number;
   predictions: DayPrediction[];
+}
+
+export interface FarmData {
+  id: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  locationLabel?: string;
 }
 
 export interface DayPrediction {
@@ -48,9 +57,16 @@ function getDateStr(offset: number): string {
   return d.toISOString().split("T")[0];
 }
 
+export const farms: FarmData[] = [
+  { id: "farm-green-valley", name: "Green Valley Estate", latitude: 40.7128, longitude: -74.006, locationLabel: "New York, USA" },
+  { id: "farm-sunrise", name: "Sunrise Ridge Farm", latitude: 36.7783, longitude: -119.4179, locationLabel: "California, USA" },
+  { id: "farm-meadowbrook", name: "Meadowbrook Acres", latitude: 52.3676, longitude: 4.9041, locationLabel: "Amsterdam, NL" },
+];
+
 export const fields: FieldData[] = [
   {
     id: "north-potato",
+    farmId: "farm-green-valley",
     name: "North Potato Plot",
     cropType: "Potato",
     soilType: "Loam",
@@ -70,6 +86,7 @@ export const fields: FieldData[] = [
   },
   {
     id: "east-tomato",
+    farmId: "farm-green-valley",
     name: "East Tomato Field",
     cropType: "Tomato",
     soilType: "Clay",
@@ -89,6 +106,7 @@ export const fields: FieldData[] = [
   },
   {
     id: "south-corn",
+    farmId: "farm-sunrise",
     name: "South Corn Valley",
     cropType: "Corn",
     soilType: "Sandy",
@@ -108,6 +126,7 @@ export const fields: FieldData[] = [
   },
   {
     id: "west-wheat",
+    farmId: "farm-meadowbrook",
     name: "West Wheat Terrace",
     cropType: "Wheat",
     soilType: "Loam",
