@@ -26,7 +26,7 @@ const FieldDetail = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
           <p className="text-lg text-muted-foreground">Field not found</p>
-          <Button onClick={() => navigate("/")}>Back to Dashboard</Button>
+          <Button onClick={() => navigate("/dashboard")}>Back to Dashboard</Button>
         </div>
       </div>
     );
@@ -44,7 +44,7 @@ const FieldDetail = () => {
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-40">
         <div className="container max-w-6xl mx-auto px-4 sm:px-6 py-4">
-          <Button variant="ghost" onClick={() => navigate("/")} className="gap-2 -ml-2 mb-3">
+          <Button variant="ghost" onClick={() => navigate("/dashboard")} className="gap-2 -ml-2 mb-3">
             <ArrowLeft size={16} />
             Back to Dashboard
           </Button>
