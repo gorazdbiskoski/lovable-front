@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { Loader2, Mail, Lock, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AuthFormPanel, AuthSwitchLink } from "@/components/AuthLayout";
+import { AuthLayout } from "@/components/AuthLayout";
 import { authStorage } from "@/lib/auth";
 import { toast } from "sonner";
 
@@ -53,7 +53,7 @@ const Register = () => {
   };
 
   return (
-    <AuthFormPanel title="Create your account" subtitle="Start tracking your fields with AI-powered insights.">
+    <AuthLayout title="Create your account" subtitle="Start tracking your fields with AI-powered insights.">
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-2">
           <Label htmlFor="fullName">Full name</Label>
@@ -114,10 +114,12 @@ const Register = () => {
 
         <p className="text-sm text-center text-muted-foreground">
           Already have an account?{" "}
-          <AuthSwitchLink to="/">Sign in</AuthSwitchLink>
+          <Link to="/" className="text-primary font-medium hover:underline">
+            Sign in
+          </Link>
         </p>
       </form>
-    </AuthFormPanel>
+    </AuthLayout>
   );
 };
 
