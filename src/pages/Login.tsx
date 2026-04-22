@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { Loader2, Mail, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AuthLayout } from "@/components/AuthLayout";
+import { AuthFormPanel, AuthSwitchLink } from "@/components/AuthLayout";
 import { authStorage } from "@/lib/auth";
 import { toast } from "sonner";
 
@@ -51,7 +51,7 @@ const Login = () => {
   };
 
   return (
-    <AuthLayout title="Welcome back" subtitle="Sign in to manage your fields and AI insights.">
+    <AuthFormPanel title="Welcome back" subtitle="Sign in to manage your fields and AI insights.">
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
@@ -100,12 +100,10 @@ const Login = () => {
 
         <p className="text-sm text-center text-muted-foreground">
           Don't have an account?{" "}
-          <Link to="/register" className="text-primary font-medium hover:underline">
-            Create one
-          </Link>
+          <AuthSwitchLink to="/register">Create one</AuthSwitchLink>
         </p>
       </form>
-    </AuthLayout>
+    </AuthFormPanel>
   );
 };
 
