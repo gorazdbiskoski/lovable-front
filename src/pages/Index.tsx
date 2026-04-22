@@ -2,13 +2,13 @@ import { useState } from "react";
 import { CloudSun, Plus, Bell, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FieldCard } from "@/components/FieldCard";
+import { FarmCard } from "@/components/FarmCard";
 import { AlertCard } from "@/components/AlertCard";
-import { AddFieldDialog } from "@/components/AddFieldDialog";
-import { fields, alerts } from "@/data/mockData";
+import { AddFarmDialog } from "@/components/AddFarmDialog";
+import { farms, alerts } from "@/data/mockData";
 
 const Index = () => {
-  const [addFieldOpen, setAddFieldOpen] = useState(false);
+  const [addFarmOpen, setAddFarmOpen] = useState(false);
 
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -35,9 +35,9 @@ const Index = () => {
                 {alerts.filter((a) => a.severity === "high").length}
               </span>
             </Button>
-            <Button onClick={() => setAddFieldOpen(true)} className="gap-2">
+            <Button onClick={() => setAddFarmOpen(true)} className="gap-2">
               <Plus size={16} />
-              Add Field
+              Add Farm
             </Button>
           </div>
         </div>
@@ -54,7 +54,7 @@ const Index = () => {
           </div>
           <div className="flex items-center gap-2 text-sm bg-secondary px-4 py-2 rounded-full">
             <CloudSun size={18} className="text-primary" />
-            <span className="font-medium">Partly Cloudy, 24°C</span>
+            <span className="font-medium">{farms.length} farms tracked</span>
           </div>
         </div>
 
@@ -75,21 +75,32 @@ const Index = () => {
           </CardContent>
         </Card>
 
-        {/* Fields Grid */}
+        {/* Farms Grid */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-display font-semibold">Your Fields</h2>
-            <span className="text-sm text-muted-foreground">{fields.length} active fields</span>
+            <h2 className="text-lg font-display font-semibold">Your Farms</h2>
+            <span className="text-sm text-muted-foreground">{farms.length} farms</span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {fields.map((field) => (
-              <FieldCard key={field.id} field={field} />
-            ))}
-          </div>
+          {farms.length === 0 ? (
+            <Card>
+              <CardContent className="py-12 flex flex-col items-center gap-3 text-center">
+                <p className="text-muted-foreground">No farms yet. Add your first farm to start tracking.</p>
+                <Button onClick={() => setAddFarmOpen(true)} className="gap-2">
+                  <Plus size={16} /> Add Farm
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {farms.map((farm) => (
+                <FarmCard key={farm.id} farm={farm} />
+              ))}
+            </div>
+          )}
         </div>
       </main>
 
-      <AddFieldDialog open={addFieldOpen} onOpenChange={setAddFieldOpen} />
+      <AddFarmDialog open={addFarmOpen} onOpenChange={setAddFarmOpen} />
     </div>
   );
 };
