@@ -23,7 +23,7 @@ const FieldDetail = () => {
 
   if (!field) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="container max-w-6xl mx-auto px-4 sm:px-6 py-16 flex items-center justify-center">
         <div className="text-center space-y-4">
           <p className="text-lg text-muted-foreground">Field not found</p>
           <Button onClick={() => navigate("/dashboard")}>Back to Dashboard</Button>
@@ -41,36 +41,34 @@ const FieldDetail = () => {
   const totalIrrigation = field.predictions.reduce((s, p) => s + p.irrigationMm, 0);
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-40">
-        <div className="container max-w-6xl mx-auto px-4 sm:px-6 py-4">
-          <Button variant="ghost" onClick={() => navigate(field.farmId ? `/farm/${field.farmId}` : "/dashboard")} className="gap-2 -ml-2 mb-3">
-            <ArrowLeft size={16} />
-            Back to Farm
-          </Button>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-            <div>
-              <h1 className="text-2xl font-display font-bold">{field.name}</h1>
-              <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
-                <span className="flex items-center gap-1.5">
-                  <Sprout size={14} className="text-primary" />
-                  {field.cropType}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <MapPin size={14} className="text-primary" />
-                  {field.soilType} · {field.areaHectares} ha
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <Calendar size={14} className="text-primary" />
-                  Planted {new Date(field.plantingDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
-                </span>
-              </div>
+    <div className="container max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+      <div>
+        <Button variant="ghost" onClick={() => navigate(field.farmId ? `/farm/${field.farmId}` : "/dashboard")} className="gap-2 -ml-2 mb-3">
+          <ArrowLeft size={16} />
+          Back to Farm
+        </Button>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+          <div>
+            <h1 className="text-2xl font-display font-bold">{field.name}</h1>
+            <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
+              <span className="flex items-center gap-1.5">
+                <Sprout size={14} className="text-primary" />
+                {field.cropType}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <MapPin size={14} className="text-primary" />
+                {field.soilType} · {field.areaHectares} ha
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Calendar size={14} className="text-primary" />
+                Planted {new Date(field.plantingDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+              </span>
             </div>
           </div>
         </div>
-      </header>
+      </div>
 
-      <main className="container max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+      <div className="space-y-6">
         {/* Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Moisture Gauge */}
