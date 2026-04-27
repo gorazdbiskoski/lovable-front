@@ -182,7 +182,7 @@ const FieldDetail = () => {
             <WeatherStrip predictions={field.predictions} />
           </CardContent>
         </Card>
-      </main>
+      </div>
     </div>
   );
 };
