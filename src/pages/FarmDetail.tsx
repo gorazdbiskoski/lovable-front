@@ -31,7 +31,7 @@ const FarmDetail = () => {
 
   if (!farm) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="container max-w-6xl mx-auto px-4 sm:px-6 py-16 flex items-center justify-center">
         <div className="text-center space-y-4">
           <p className="text-lg text-muted-foreground">Farm not found</p>
           <Button onClick={() => navigate("/dashboard")}>Back to Dashboard</Button>
@@ -43,35 +43,33 @@ const FarmDetail = () => {
   const today = forecast?.[0];
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-40">
-        <div className="container max-w-6xl mx-auto px-4 sm:px-6 py-4">
-          <Button variant="ghost" onClick={() => navigate("/dashboard")} className="gap-2 -ml-2 mb-3">
-            <ArrowLeft size={16} />
-            Back to Dashboard
-          </Button>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-            <div>
-              <h1 className="text-2xl font-display font-bold">{farm.name}</h1>
-              <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground flex-wrap">
-                <span className="flex items-center gap-1.5">
-                  <MapPin size={14} className="text-primary" />
-                  {farm.locationLabel ?? "Custom location"}
-                </span>
-                <span className="font-mono text-xs">
-                  {farm.latitude.toFixed(4)}, {farm.longitude.toFixed(4)}
-                </span>
-              </div>
+    <div className="container max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+      <div>
+        <Button variant="ghost" onClick={() => navigate("/dashboard")} className="gap-2 -ml-2 mb-3">
+          <ArrowLeft size={16} />
+          Back to Dashboard
+        </Button>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+          <div>
+            <h1 className="text-2xl font-display font-bold">{farm.name}</h1>
+            <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground flex-wrap">
+              <span className="flex items-center gap-1.5">
+                <MapPin size={14} className="text-primary" />
+                {farm.locationLabel ?? "Custom location"}
+              </span>
+              <span className="font-mono text-xs">
+                {farm.latitude.toFixed(4)}, {farm.longitude.toFixed(4)}
+              </span>
             </div>
-            <Button onClick={() => setAddFieldOpen(true)} className="gap-2">
-              <Plus size={16} />
-              Add Field
-            </Button>
           </div>
+          <Button onClick={() => setAddFieldOpen(true)} className="gap-2">
+            <Plus size={16} />
+            Add Field
+          </Button>
         </div>
-      </header>
+      </div>
 
-      <main className="container max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+      <div className="space-y-6">
         {/* Today summary */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Card>
