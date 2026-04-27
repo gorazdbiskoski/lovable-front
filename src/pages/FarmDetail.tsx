@@ -158,7 +158,7 @@ const FarmDetail = () => {
             </div>
           )}
         </div>
-      </main>
+      </div>
 
       <AddFieldDialog
         open={addFieldOpen}
