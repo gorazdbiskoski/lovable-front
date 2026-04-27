@@ -71,9 +71,9 @@ export function AppSidebar() {
     <>
       <Sidebar collapsible="icon">
         <SidebarHeader className="border-b">
-          <div className="flex items-center gap-2 px-2 py-1.5">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shrink-0">
-              <Leaf size={18} className="text-primary-foreground" />
+          <div className="flex items-center gap-2 px-2 py-1.5 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:justify-center">
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shrink-0 group-data-[collapsible=icon]:w-7 group-data-[collapsible=icon]:h-7">
+              <Leaf className="text-primary-foreground h-[18px] w-[18px] group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:w-4" />
             </div>
             {!collapsed && (
               <span className="font-display font-bold text-base">SmartDrop</span>
