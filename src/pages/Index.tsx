@@ -1,9 +1,9 @@
-import { CloudSun, Bell } from "lucide-react";
+import { CloudSun, Bell, Droplet, Sprout, TrendingUp, Tractor } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FarmCard } from "@/components/FarmCard";
 import { AlertCard } from "@/components/AlertCard";
-import { farms, alerts } from "@/data/mockData";
+import { farms, alerts, fields } from "@/data/mockData";
 import { authStorage } from "@/lib/auth";
 import { useNavigate } from "react-router-dom";
 
