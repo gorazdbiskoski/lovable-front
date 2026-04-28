@@ -35,6 +35,28 @@ const Index = () => {
         </div>
       </div>
 
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        {[
+          { label: "Water Savings", value: "40%", icon: Droplet, tint: "bg-primary/10 text-primary" },
+          { label: "Active Fields", value: String(fields.length), icon: Sprout, tint: "bg-success/10 text-success" },
+          { label: "Managed Farms", value: String(farms.length), icon: Tractor, tint: "bg-accent/10 text-accent-foreground" },
+          { label: "Yield Boost", value: "+18%", icon: TrendingUp, tint: "bg-warning/10 text-warning" },
+        ].map((stat) => (
+          <Card key={stat.label} className="border shadow-sm">
+            <CardContent className="p-4 flex items-center gap-3">
+              <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${stat.tint}`}>
+                <stat.icon size={22} />
+              </div>
+              <div className="min-w-0">
+                <div className="text-xl sm:text-2xl font-display font-bold leading-none">{stat.value}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground mt-1 truncate">{stat.label}</div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
       {/* Alerts */}
       <Card>
         <CardHeader className="pb-3 flex flex-row items-center justify-between">
