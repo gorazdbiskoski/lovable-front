@@ -167,9 +167,11 @@ export function AppSidebar() {
         <SidebarFooter className="border-t">
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton tooltip="Settings">
-                <Settings className="h-4 w-4" />
-                {!collapsed && <span>Settings</span>}
+              <SidebarMenuButton asChild tooltip="Settings">
+                <NavLink to="/settings" className={linkBase} activeClassName={linkActive}>
+                  <Settings className="h-4 w-4" />
+                  {!collapsed && <span>Settings</span>}
+                </NavLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
 
