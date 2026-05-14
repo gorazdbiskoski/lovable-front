@@ -21,6 +21,12 @@ export const authStorage = {
   setUser(user: AuthUser) {
     localStorage.setItem(USER_KEY, JSON.stringify(user));
   },
+  updateUser(patch: Partial<AuthUser>) {
+    const current = this.getUser();
+    if (!current) return;
+    const next = { ...current, ...patch };
+    localStorage.setItem(USER_KEY, JSON.stringify(next));
+  },
   clear() {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
