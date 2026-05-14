@@ -199,18 +199,7 @@ export default function Settings() {
               <CardDescription>Personalize how SmartDrop looks and measures things.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6 max-w-lg">
-              <div className="space-y-2">
-                <Label>Theme</Label>
-                <Select value={prefs.theme} onValueChange={(v) => setTheme(v as Theme)}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
-                    <SelectItem value="system">System</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
+              
               <div className="space-y-2">
                 <Label>Units</Label>
                 <Select value={prefs.units} onValueChange={(v) => update({ units: v as Units })}>
