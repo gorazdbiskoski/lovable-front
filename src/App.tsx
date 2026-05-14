@@ -35,6 +35,7 @@ const App = () => (
             <Route path="/alerts" element={<Alerts />} />
             <Route path="/farm/:farmId" element={<FarmDetail />} />
             <Route path="/field/:fieldId" element={<FieldDetail />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
