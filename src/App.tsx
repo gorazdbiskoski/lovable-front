@@ -13,6 +13,7 @@ import Predictions from "./pages/Predictions.tsx";
 import Alerts from "./pages/Alerts.tsx";
 import Login from "./pages/Login.tsx";
 import Register from "./pages/Register.tsx";
+import Settings from "./pages/Settings.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
