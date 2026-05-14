@@ -1,54 +1,60 @@
-# Sidebar Navigation Implementation
+## Settings page
 
-Add a left-side collapsible icon sidebar to all authenticated routes, plus three new list pages and a Predictions page.
-
-## Structure
+Add a `/settings` route wired to the sidebar Settings button. The page uses a left sub-nav (tabs) so we can grow it over time without redesigning.
 
 ```text
-🌿 SmartDrop                  [≡]
-─────────────────────────────────
-MAIN
- 🏠 Dashboard         /dashboard
- 🌾 Farms             /farms
- 🌱 All Fields        /fields
- 📈 Predictions       /predictions   ← new
- 🔔 Alerts      [3]   /alerts
-
-YOUR FARMS
- 📍 North Valley      /farm/:id
- 📍 Sunrise Acres     /farm/:id
- ➕ Add Farm          (opens dialog)
-─────────────────────────────────
- ⚙️ Settings
- 👤 [Fullname]        (logout menu)
+/settings
+ ├─ Profile          ← default
+ ├─ Account
+ ├─ Preferences
+ ├─ Notifications
+ └─ Farm defaults
 ```
 
-## New files
+### What to put in v1
 
-- **`src/components/AppSidebar.tsx`** — shadcn `Sidebar` with `collapsible="icon"`. Three groups: Main nav, Your Farms (dynamic from `mockData.farms`, capped at 5 with "Show all"), Footer (Settings + user dropdown with logout via `src/lib/auth.ts`). Uses `NavLink` for active state with `bg-muted text-primary font-medium`. High-severity alert badge on Alerts item.
-- **`src/components/AppLayout.tsx`** — wraps `SidebarProvider` + `<AppSidebar />` + slim sticky header (containing `SidebarTrigger`, page title, notification bell) + `<Outlet />`. Replaces per-page headers.
-- **`src/pages/Farms.tsx`** — full farms list, reuses `FarmCard`, includes Add Farm button.
-- **`src/pages/Fields.tsx`** — flat list of every field across all farms, reuses `FieldCard`, shows parent farm name as subtitle.
-- **`src/pages/Predictions.tsx`** — aggregated 7-day irrigation predictions across all fields, grouped by farm, reusing prediction logic/components from `FieldDetail`.
-- **`src/pages/Alerts.tsx`** — full alert history list, reuses `AlertCard`, filterable by severity.
+**Profile**
+- Full name (editable)
+- Email (read-only for now — needs real auth to change safely)
+- Avatar placeholder (initials)
 
-## Edited files
+**Account**
+- Change password (current / new / confirm) — stub with toast since auth is mocked
+- Log out button
+- Delete account (danger zone, disabled stub)
 
-- **`src/App.tsx`** — wrap authenticated routes (`/dashboard`, `/farm/:farmId`, `/field/:fieldId`, plus new `/farms`, `/fields`, `/predictions`, `/alerts`) inside a layout route using `<AppLayout />`. Login (`/`) and Register stay outside.
-- **`src/pages/Index.tsx`** — remove duplicate header (now provided by layout); keep greeting, alerts preview card, farms grid.
-- **`src/pages/FarmDetail.tsx`** & **`src/pages/FieldDetail.tsx`** — drop local headers; rely on `AppLayout` header.
+**Preferences**
+- Theme: Light / Dark / System
+- Units: Metric (ha, mm, °C) / Imperial (ac, in, °F)
+- Language: English (only option for now)
+- Date format: DD/MM/YYYY vs MM/DD/YYYY
 
-## Behavior
+**Notifications**
+- Toggle: High-severity alerts (in-app)
+- Toggle: Daily irrigation summary (in-app)
+- Toggle: Weather warnings (in-app)
+- Email notifications — disabled toggle with "Requires backend" hint
 
-- **Collapsed mode**: 56px icon strip, labels hidden, tooltips on hover.
-- **Trigger**: `SidebarTrigger` in top header — always visible regardless of state.
-- **Mobile**: shadcn auto-switches to off-canvas Sheet.
-- **Active route**: highlighted via `NavLink` `activeClassName`.
-- **Auth-only**: layout wraps only authenticated routes; `/` and `/register` keep existing `AuthLayout`.
+**Farm defaults**
+- Default farm shown on dashboard (dropdown of farms)
+- Default crop type for new fields
+- Default soil type for new fields
 
-## Technical notes
+### Files
 
-- Uses existing `@/components/ui/sidebar` and `@/components/NavLink` — no new deps.
-- Sidebar farm list and alert badge read from `src/data/mockData.ts`, same source as dashboard, so they stay in sync.
-- User fullname pulled from `src/lib/auth.ts` (already stores it from earlier work).
-- No changes to auth flow, map, or weather logic.
+- **New** `src/pages/Settings.tsx` — tabbed layout using shadcn `Tabs`, sections above as cards.
+- **New** `src/lib/preferences.ts` — `localStorage`-backed get/set for units, theme, date format, notification toggles, farm defaults. Typed `Preferences` interface + `usePreferences()` hook.
+- **Edit** `src/components/AppSidebar.tsx` — wrap the Settings `SidebarMenuButton` in a `NavLink` to `/settings` with active-state styling matching the other items.
+- **Edit** `src/App.tsx` — add `<Route path="/settings" element={<Settings />} />` inside the `AppLayout` route.
+- **Edit** `src/lib/auth.ts` — extend `AuthUser` with optional `firstName` / `lastName` (kept backwards-compatible with `fullName`) and add `updateUser(partial)` helper.
+
+### Behavior
+
+- All writes are local (localStorage) and show a success toast. Anything that genuinely needs a backend (email change, real password change, email notifications, account deletion) is visible but clearly marked "Requires backend" and disabled, so the UI is ready when Lovable Cloud is enabled later.
+- Form validation with `zod` (matches existing Login/Register pattern): name 2–100 chars, password ≥6 chars + must match confirm.
+- Theme toggle applies immediately by toggling the `dark` class on `<html>`.
+- Unit + date-format preferences are stored now; wiring them into FieldCard / Predictions / WeatherStrip can be a follow-up task.
+
+### My recommendation for v1 scope
+
+Start with **Profile + Preferences + Notifications**. They're fully functional with the current mock auth, deliver visible value, and don't require backend wiring. Account (password change) and Farm defaults can ship in a quick follow-up once we decide on Lovable Cloud.
