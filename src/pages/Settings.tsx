@@ -90,11 +90,6 @@ export default function Settings() {
     toast.success("Password updated (mock — wire to backend to persist)");
   };
 
-  const setTheme = (theme: Theme) => {
-    update({ theme });
-    applyTheme(theme);
-  };
-
   return (
     <div className="p-6 max-w-5xl mx-auto space-y-6">
       <header>
