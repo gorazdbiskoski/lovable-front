@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { authStorage } from "@/lib/auth";
-import { usePreferences, applyTheme, type Theme, type Units, type DateFormat } from "@/lib/preferences";
+import { usePreferences, type Units, type DateFormat } from "@/lib/preferences";
 import { farms } from "@/data/mockData";
 import { toast } from "sonner";
 
@@ -88,11 +88,6 @@ export default function Settings() {
     setSavingPwd(false);
     setPwd({ current: "", next: "", confirm: "" });
     toast.success("Password updated (mock — wire to backend to persist)");
-  };
-
-  const setTheme = (theme: Theme) => {
-    update({ theme });
-    applyTheme(theme);
   };
 
   return (
@@ -199,18 +194,7 @@ export default function Settings() {
               <CardDescription>Personalize how SmartDrop looks and measures things.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6 max-w-lg">
-              <div className="space-y-2">
-                <Label>Theme</Label>
-                <Select value={prefs.theme} onValueChange={(v) => setTheme(v as Theme)}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
-                    <SelectItem value="system">System</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
+              
               <div className="space-y-2">
                 <Label>Units</Label>
                 <Select value={prefs.units} onValueChange={(v) => update({ units: v as Units })}>
