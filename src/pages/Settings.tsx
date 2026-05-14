@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { authStorage } from "@/lib/auth";
-import { usePreferences, applyTheme, type Theme, type Units, type DateFormat } from "@/lib/preferences";
+import { usePreferences, type Units, type DateFormat } from "@/lib/preferences";
 import { farms } from "@/data/mockData";
 import { toast } from "sonner";
 
